@@ -1,4 +1,3 @@
-#!CMD: gt
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -8,21 +7,21 @@ spec:
   project: default
 
   source:
-    chart: traefik
-    repoURL: https://traefik.github.io/charts
-    targetRevision: 30.1.0
+    chart: ingress-nginx
+    repoURL: https://kubernetes.github.io/ingress-nginx
+    targetRevision: 4.10.0
 
-    # helm:
-    #   values: |
-    #     controller:
-    #       hostNetwork: true
-    #       hostPort:
-    #         enabled: true
-    #       kind: DaemonSet
-    #       service:
-    #         enabled: false
-    #       extraArgs:
-    #         enable-ssl-passthrough: true
+    helm:
+      values: |
+        controller:
+          hostNetwork: true
+          hostPort:
+            enabled: true
+          kind: DaemonSet
+          service:
+            enabled: false
+          extraArgs:
+            enable-ssl-passthrough: true
 
   destination:
      server: https://kubernetes.default.svc
