@@ -8,7 +8,7 @@ spec:
 
   source:
     chart: traefik/traefik
-    repoURL: oci://ghcr.io/traefik/helm/traefik
+    repoURL: ghcr.io/traefik/helm/traefik
     targetRevision: 30.1.0
 
     # helm:
