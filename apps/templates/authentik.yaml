@@ -7,7 +7,7 @@ spec:
   project: default
 
   sources:
-    - chart: goauthentik
+    - chart: authentik
       repoURL: https://charts.goauthentik.io/
       targetRevision: 2024.8.2
 
