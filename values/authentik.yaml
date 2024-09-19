@@ -9,11 +9,7 @@ authentik:
 
 server:
     ingress:
-        # Specify kubernetes ingress controller class name
-        ingressClassName: nginx | traefik | kong
         enabled: false
-        hosts:
-            - authentik.domain.tld
 
 postgresql:
     enabled: true
