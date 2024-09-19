@@ -12,7 +12,7 @@ spec:
       targetRevision: 2024.8.2
 
       helm:
-        values: |
+        valuesFile: |
           - $values/values/authentik.yaml
     - repoURL: git@github.com:arch-err/Cluster-POC.git
       targetRevision: master
