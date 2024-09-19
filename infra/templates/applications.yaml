@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: git@github.com:arch-err/Cluster-POC.git
     targetRevision: HEAD
-    path: applications
+    path: apps
 
   destination:
      server: https://kubernetes.default.svc
