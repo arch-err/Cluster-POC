@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://gitlab1.4rch3r.duckdns.org/cluster/kubesrc.git
+    repoURL: git@github.com:arch-err/Cluster-POC.git
     targetRevision: HEAD
     path: applications
 
