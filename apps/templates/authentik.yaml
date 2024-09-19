@@ -15,7 +15,7 @@ spec:
         valueFiles:
           - $values/values/authentik.yaml
     - repoURL: git@github.com:arch-err/Cluster-POC.git
-      targetRevision: master
+      targetRevision: HEAD
       ref: values
 
   destination:
