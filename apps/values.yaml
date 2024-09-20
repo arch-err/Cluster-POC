@@ -51,6 +51,66 @@ apps:
       enabled: false
     homepage:
       enabled: false
+  - name: portainer
+    namespace: portainer
+    chart:
+      url: https://portainer.github.io/k8s/
+      name: portainer
+      version: 1.0.53
+    secrets:
+      enabled: false
+    homepage:
+      enabled: true
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  #   homepage:
+  #     enabled: true
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  #   homepage:
+  #     enabled: true
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  #   homepage:
+  #     enabled: true
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  #   homepage:
+  #     enabled: true
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  #   homepage:
+  #     enabled: true
   # - name: <++>
   #   namespace: <++>
   #   chart:
