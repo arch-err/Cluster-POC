@@ -24,7 +24,7 @@ spec:
           {{- end }}
 
 		{{- if .homepage.enabled }}
-        valueObject:
+        valuesObject:
           ingress:
             enabled: true
             ingressClassName: nginx
