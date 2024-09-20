@@ -15,9 +15,9 @@ spec:
       helm:
         valueFiles:
           - $reporoot/values/{{ .name }}.yaml
-		  {{- if .secrets.enabled }}
           - secrets://https://raw.githubusercontent.com/{{ $.Values.sourceRepo }}/main/secrets/{{ .name }}.yaml
-		  {{- end }}
+		ignoreMissingValueFiles: true
+
 
     - repoURL: git@github.com:{{ $.Values.sourceRepo }}.git
       targetRevision: HEAD
