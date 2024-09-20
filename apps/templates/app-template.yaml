@@ -23,8 +23,32 @@ spec:
           - secrets://https://raw.githubusercontent.com/{{ $.Values.sourceRepo }}/main/secrets/{{ .name }}.yaml
           {{- end }}
 
-		{{- if .homepage.enabled }}
+
+        {{- if .homepage.enabled }}
         valuesObject:
+          {{- if .homepage.valuesSection }}
+          {{ .homepage.valuesSection }}:
+            ingress:
+              enabled: true
+              ingressClassName: nginx
+
+              annotations:
+                nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+                nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+                cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
+
+                gethomepage.dev/enabled: "true"
+                gethomepage.dev/name: {{ default (.name | title) .homepage.name | quote}}
+                gethomepage.dev/description: {{ default "" .homepage.description | quote }}
+                gethomepage.dev/group: {{ default (.namespace | title) }}
+                gethomepage.dev/icon: {{ default (print .name ".png" ) .homepage.icon }}
+
+              hosts:
+                - {{ .name }}.jesber.duckdns.org
+              tls:
+                - hosts:
+                  - {{ .name }}.jesber.duckdns.org
+		  {{- else }}
           ingress:
             enabled: true
             ingressClassName: nginx
@@ -45,7 +69,8 @@ spec:
             tls:
               - hosts:
                 - {{ .name }}.jesber.duckdns.org
-		{{- end }}
+          {{- end }}
+        {{- end }}
 
 
   destination:
