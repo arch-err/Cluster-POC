@@ -14,7 +14,7 @@ spec:
       helm:
         valueFiles:
           - $reporoot/values/grafana.yaml
-          - secrets://$reporoot/secrets/grafana.yaml
+          - $reporoot/secrets://secrets/grafana.yaml
 
     - repoURL: git@github.com:arch-err/Cluster-POC.git
       targetRevision: HEAD
