@@ -91,5 +91,5 @@ repoServer:
       command: [ "/bin/sh", "-c" ]
       args:
         - apk --no-cache add curl;
-          helm plugin install https://github.com/jkroepke/helm-secrets
+          helm plugin install https://github.com/jkroepke/helm-secrets;
           chmod -R 777 $HELM_DATA_HOME;
