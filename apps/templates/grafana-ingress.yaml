@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: authentication
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: grafana.jesber.duckdns.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana-server
+            port:
+              name: http
+  tls:
+  - hosts:
+    - grafana.jesber.duckdns.org
+    secretName: grafana-server-tls # as expected by argocd-server
