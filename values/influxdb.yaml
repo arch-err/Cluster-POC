@@ -90,4 +90,4 @@ ingress:
   className: nginx
   tls: true
   secretName: influxdb-server-tls
-  hostname: influx.jesber.duckdns.org
+  hostname: influxdb.jesber.duckdns.org
