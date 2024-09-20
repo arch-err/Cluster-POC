@@ -7,9 +7,9 @@ spec:
   project: default
 
   sources:
-    - chart: alloy
-      repoURL: https://grafana.github.io/helm-charts
-      targetRevision: 0.7.0
+    - chart: influxdb2
+      repoURL: https://helm.influxdata.com/
+      targetRevision: 2.1.2
 
       helm:
         valueFiles:
