@@ -28,6 +28,8 @@ apps:
       version: 2.1.2
     secrets:
       enabled: true
+    homepage:
+      enabled: false
   - name: prometheus
     namespace: monitoring
     chart:
@@ -35,6 +37,8 @@ apps:
       name: prometheus
       version: 25.27.0
     secrets:
+      enabled: false
+    homepage:
       enabled: false
   - name: homepage
     namespace: homepage
@@ -44,6 +48,8 @@ apps:
       version: 2.0.1
     secrets:
       enabled: false
+    homepage:
+      enabled: false
   # - name: <++>
   #   namespace: <++>
   #   chart:
@@ -52,43 +58,5 @@ apps:
   #     version: <++>
   #   secrets:
   #     enabled: false
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
+  #   homepage:
+  #     enabled: true
