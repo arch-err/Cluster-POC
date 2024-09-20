@@ -1,0 +1,36 @@
+{{- range .Values.apps }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .name }}
+  namespace: argocd
+spec:
+  project: default
+
+  sources:
+    - chart: {{ .chart.name }}
+      repoURL: {{ .chart.url }}
+      targetRevision: {{ .chart.version }}
+
+      helm:
+        valueFiles:
+          - $reporoot/values/{{ .name }}.yaml
+		  {{- if .secrets.enabled }}
+          - secrets://https://raw.githubusercontent.com/{{ $.Values.sourceRepo }}/main/secrets/{{ .name }}.yaml
+		  {{- end }}
+
+    - repoURL: git@github.com:{{ $.Values.sourceRepo }}.git
+      targetRevision: HEAD
+      ref: reporoot
+
+  destination:
+     server: https://kubernetes.default.svc
+     namespace: {{ .namespace }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
+{{ end }}
