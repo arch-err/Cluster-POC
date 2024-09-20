@@ -28,6 +28,11 @@ ingress:
       gethomepage.dev/description: "A modern, secure, highly customizable application dashboard."
       gethomepage.dev/group: "A New Group"
       gethomepage.dev/icon: "homepage.png"
+
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
+
     ingressClassName: "nginx"
     hosts:
       - host: &host "homepage.jesber.duckdns.org"
