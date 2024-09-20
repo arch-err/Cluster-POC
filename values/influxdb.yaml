@@ -85,13 +85,9 @@ initScripts:
       influx apply --force yes -u https://raw.githubusercontent.com/influxdata/community-templates/master/influxdb2_operational_monitoring/influxdb2_operational_monitoring.yml
 
 
-# ingress:
-#   enabled: true
-#   className: nginx
-#   tls: true
-#   secretName: influxdb-server-tls
-#   hostname: influx.jesber.duckdns.org
-#   annotations:
-#     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-#     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-#     cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
+ingress:
+  enabled: true
+  className: nginx
+  tls: true
+  secretName: influxdb-server-tls
+  hostname: influx.jesber.duckdns.org
