@@ -84,24 +84,22 @@ repoServer:
     - name: HELM_SECRETS_HELM_PATH
       value: /usr/local/bin/helm
 
-    - name: HELM_SECRETS_LOAD_GPG_KEYS
-      # Multiple keys can be separated by space
-      value: /helm-secrets-private-keys/key.asc
+    - name: SOPS_AGE_KEY_FILE
+      value: /.age/key.txt
   volumes:
     - name: gitops-tools
       emptyDir: {}
-    # kubectl create secret generic helm-secrets-private-keys --from-file=key.asc=assets/gpg/private2.gpg
-    - name: helm-secrets-private-keys
+    - name: gitops-age-key
       secret:
-        secretName: helm-secrets-private-keys
+        secretName: gitops-age-key
   volumeMounts:
     - mountPath: /gitops-tools
       name: gitops-tools
     - mountPath: /usr/local/sbin/helm
       subPath: helm
       name: gitops-tools
-    - mountPath: /helm-secrets-private-keys/
-      name: helm-secrets-private-keys
+    - mountPath: /.age/key.txt
+      name: gitops-age-key
   initContainers:
     - name: download-tools
       image: alpine:latest
