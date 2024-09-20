@@ -46,3 +46,41 @@ extraObjects:
         automated:
           prune: true
           selfHeal: true
+
+
+
+repoServer:
+  volumes:
+    - name: gcp-credentials
+      secret:
+        secretName: my-gcp-credentials
+  volumeMounts:
+    - name: gcp-credentials
+      mountPath: /gcp
+  env:
+    - name: HELM_CACHE_HOME
+      value: /helm-working-dir
+    - name: HELM_CONFIG_HOME
+      value: /helm-working-dir
+    - name: HELM_DATA_HOME
+      value: /helm-working-dir
+  initContainers:
+    - name: helm-gcp-authentication
+      image: alpine/helm:3.8.1
+      volumeMounts:
+        - name: helm-working-dir
+          mountPath: /helm-working-dir
+        - name: gcp-credentials
+          mountPath: /sops
+      env:
+        - name: HELM_CACHE_HOME
+          value: /helm-working-dir
+        - name: HELM_CONFIG_HOME
+          value: /helm-working-dir
+        - name: HELM_DATA_HOME
+          value: /helm-working-dir
+      command: [ "/bin/sh", "-c" ]
+      args:
+        - apk --no-cache add curl;
+          helm plugin install https://github.com/jkroepke/helm-secrets
+          chmod -R 777 $HELM_DATA_HOME;
