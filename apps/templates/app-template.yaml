@@ -16,7 +16,7 @@ spec:
         valueFiles:
           - $reporoot/values/{{ .name }}.yaml
           - secrets://https://raw.githubusercontent.com/{{ $.Values.sourceRepo }}/main/secrets/{{ .name }}.yaml
-		ignoreMissingValueFiles: true
+        ignoreMissingValueFiles: true
 
 
     - repoURL: git@github.com:{{ $.Values.sourceRepo }}.git
