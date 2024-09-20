@@ -72,7 +72,7 @@ repoServer:
     - name: HELM_DATA_HOME
       value: /helm-working-dir
   initContainers:
-    - name: helm-gcp-authentication
+    - name: helm-secrets
       image: alpine/helm:3.8.1
       volumeMounts:
         - name: helm-working-dir
