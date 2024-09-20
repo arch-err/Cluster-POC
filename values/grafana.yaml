@@ -278,6 +278,7 @@ ingress:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
 
+    gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Grafana"
     gethomepage.dev/description: "Platform for data analytics and monitoring"
     gethomepage.dev/group: "Monitoring"
