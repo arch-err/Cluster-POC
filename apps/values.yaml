@@ -33,6 +33,14 @@ apps:
       version: 25.27.0
     secrets:
       enabled: false
+  - name: homepage
+    namespace: homepage
+    chart:
+      url: https://jameswynn.github.io/helm-charts
+      name: homepage
+      version: 2.0.1
+    secrets:
+      enabled: false
   # - name: <++>
   #   namespace: <++>
   #   chart:
@@ -40,7 +48,7 @@ apps:
   #     name: <++>
   #     version: <++>
   #   secrets:
-  #     enabled: <++>
+  #     enabled: false
   # - name: <++>
   #   namespace: <++>
   #   chart:
@@ -48,4 +56,44 @@ apps:
   #     name: <++>
   #     version: <++>
   #   secrets:
-  #     enabled: <++>
+  #     enabled: false
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
