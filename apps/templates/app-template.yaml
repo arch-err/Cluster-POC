@@ -8,6 +8,10 @@ spec:
   project: default
 
   sources:
+    - repoURL: git@github.com:{{ $.Values.sourceRepo }}.git
+      targetRevision: HEAD
+      ref: reporoot
+
     - chart: {{ .chart.name }}
       repoURL: {{ .chart.url }}
       targetRevision: {{ .chart.version }}
@@ -15,13 +19,34 @@ spec:
       helm:
         valueFiles:
           - $reporoot/values/{{ .name }}.yaml
+          {{- if .secrets.enabled }}
           - secrets://https://raw.githubusercontent.com/{{ $.Values.sourceRepo }}/main/secrets/{{ .name }}.yaml
-        ignoreMissingValueFiles: true
+          {{- end }}
 
+		{{- if .homepage.enabled }}
+        valueObject:
+          ingress:
+            enabled: true
+            ingressClassName: nginx
 
-    - repoURL: git@github.com:{{ $.Values.sourceRepo }}.git
-      targetRevision: HEAD
-      ref: reporoot
+            annotations:
+              nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+              nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+              cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
+
+              gethomepage.dev/enabled: "true"
+              gethomepage.dev/name: {{ default (.name | title) .homepage.name | quote}}
+              gethomepage.dev/description: {{ default "" .homepage.description | quote }}
+              gethomepage.dev/group: {{ default (.namespace | title) }}
+              gethomepage.dev/icon: {{ default (print .name ".png" ) .homepage.icon }}
+
+            hosts:
+              - {{ .name }}.jesber.duckdns.org
+            tls:
+              - hosts:
+                - {{ .name }}.jesber.duckdns.org
+		{{- end }}
+
 
   destination:
      server: https://kubernetes.default.svc

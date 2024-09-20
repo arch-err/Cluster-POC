@@ -15,6 +15,9 @@ apps:
       url: https://grafana.github.io/helm-charts
       name: grafana
       version: 8.5.1
+    homepage:
+      enabled: true
+      description: "Platform for data analytics and monitoring"
     secrets:
       enabled: true
   - name: influxdb
@@ -39,14 +42,8 @@ apps:
       url: https://jameswynn.github.io/helm-charts
       name: homepage
       version: 2.0.1
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
+    secrets:
+      enabled: false
   # - name: <++>
   #   namespace: <++>
   #   chart:
