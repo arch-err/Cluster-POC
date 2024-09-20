@@ -93,3 +93,4 @@ repoServer:
         - apk --no-cache add curl;
           helm plugin install https://github.com/jkroepke/helm-secrets;
           chmod -R 777 $HELM_DATA_HOME;
+          rm -rf /helm-working-dir/plugins/https-github.com-jkroepke-helm-secrets;
