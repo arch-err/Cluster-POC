@@ -268,34 +268,6 @@ hostAliases: []
   # - ip: "1.2.3.4"
   #   hostnames:
   #     - "my.host.com"
-
-ingress:
-  enabled: true
-
-  ingressClassName: nginx
-  annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-    cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
-
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Grafana"
-    gethomepage.dev/description: "Platform for data analytics and monitoring"
-    gethomepage.dev/group: "Monitoring"
-    gethomepage.dev/icon: "grafana.png"
-  path: /
-
-  pathType: Prefix
-
-  hosts:
-    - grafana.jesber.duckdns.org
-
-
-  tls:
-    - hosts:
-      - grafana.jesber.duckdns.org
-      secretName: grafana-server-tls # as expected by argocd-server
-
 resources: {}
 #  limits:
 #    cpu: 100m
