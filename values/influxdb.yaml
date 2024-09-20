@@ -87,7 +87,7 @@ initScripts:
 
 ingress:
   enabled: true
-  # ingressClassName: nginx
+  ingressClassName: nginx
   tls: true
   secretName: influxdb-server-tls
   hostname: influx.jesber.duckdns.org
