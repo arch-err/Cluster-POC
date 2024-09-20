@@ -4,4 +4,4 @@ persistence:
 
 ingress:
   hosts:
-    - portainer.jesber.duckdns.org
+    - host: portainer.jesber.duckdns.org
