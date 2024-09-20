@@ -2,5 +2,5 @@
 creation_rules:
     # upon creation of a file that matches the pattern *.sops.yaml,
     - path_regex: secrets/.*\.yaml$
-      encrypted_regex: ^(data|stringData)$
+      encrypted_regex: ^(.*)$
       age: 'age14y9cv3nsls9pzpnsfm3jvjnly0w5s3x0ruaspqwerqhm6vashazsqhpp05'
