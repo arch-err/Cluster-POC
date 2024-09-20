@@ -1,3 +1,51 @@
 # Default values for apps.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+
+
+sourceRepo: arch-err/Cluster-POC
+
+sourceRepoUrl:
+sourceRepoRevision: HEAD
+
+apps:
+  - name: grafana
+    namespace: monitoring
+    chart:
+      url: https://grafana.github.io/helm-charts
+      name: grafana
+      version: 8.5.1
+    secrets:
+      enabled: true
+  - name: influxdb
+    namespace: monitoring
+    chart:
+      url: https://helm.influxdata.com/
+      name: influxdb2
+      version: 2.1.2
+    secrets:
+      enabled: true
+  - name: prometheus
+    namespace: monitoring
+    chart:
+      url: https://prometheus-community.github.io/helm-charts
+      name: prometheus
+      version: 25.27.0
+    secrets:
+      enabled: true
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: <++>
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: <++>
