@@ -87,7 +87,7 @@ initScripts:
 
 ingress:
   enabled: true
-  ingressClassName: nginx
+  # ingressClassName: nginx
   tls: true
   secretName: influxdb-server-tls
   hostname: influx.jesber.duckdns.org
@@ -95,6 +95,3 @@ ingress:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
-  path: /
-
-  pathType: Prefix
