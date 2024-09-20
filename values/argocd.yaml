@@ -66,11 +66,11 @@ repoServer:
       mountPath: /.age/key.txt
   env:
     - name: HELM_CACHE_HOME
-      value: /helm-working-dir/cache
+      value: /helm-working-dir
     - name: HELM_CONFIG_HOME
-      value: /helm-working-dir/config
+      value: /helm-working-dir
     - name: HELM_DATA_HOME
-      value: /helm-working-dir/data
+      value: /helm-working-dir
   initContainers:
     - name: helm-secrets
       image: alpine/helm:3.8.1
@@ -83,11 +83,11 @@ repoServer:
         - name: SOPS_AGE_KEY_FILE
           value: /.age/key.txt
         - name: HELM_CACHE_HOME
-          value: /helm-working-dir/cache
+          value: /helm-working-dir
         - name: HELM_CONFIG_HOME
-          value: /helm-working-dir/config
+          value: /helm-working-dir
         - name: HELM_DATA_HOME
-          value: /helm-working-dir/data
+          value: /helm-working-dir
       command: [ "/bin/sh", "-c" ]
       args:
         - apk --no-cache add curl;
