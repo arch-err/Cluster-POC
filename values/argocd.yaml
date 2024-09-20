@@ -22,6 +22,13 @@ configs:
       background: linear-gradient(to bottom, #333, #222, #111);
     }
 
+  cm:
+    helm.valuesFileSchemes: >-
+      secrets+gpg-import, secrets+gpg-import-kubernetes,
+      secrets+age-import, secrets+age-import-kubernetes,
+      secrets, secrets+literal,
+      https
+
 
 
 extraObjects:
@@ -51,12 +58,12 @@ extraObjects:
 
 repoServer:
   volumes:
-    - name: gcp-credentials
+    - name: age-key
       secret:
-        secretName: my-gcp-credentials
+        secretName: gitops-age-key
   volumeMounts:
-    - name: gcp-credentials
-      mountPath: /gcp
+    - name: age-key
+      mountPath: /.age/key.txt
   env:
     - name: HELM_CACHE_HOME
       value: /helm-working-dir
@@ -70,9 +77,11 @@ repoServer:
       volumeMounts:
         - name: helm-working-dir
           mountPath: /helm-working-dir
-        - name: gcp-credentials
-          mountPath: /sops
+        - name: age-key
+          mountPath: /.age/key.txt
       env:
+        - name: SOPS_AGE_KEY_FILE
+          value: /.age/key.txt
         - name: HELM_CACHE_HOME
           value: /helm-working-dir
         - name: HELM_CONFIG_HOME
