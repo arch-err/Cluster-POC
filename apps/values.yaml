@@ -29,7 +29,7 @@ apps:
     secrets:
       enabled: true
     homepage:
-      enabled: false
+      enabled: true
   - name: prometheus
     namespace: monitoring
     chart:
