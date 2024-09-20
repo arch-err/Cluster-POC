@@ -39,7 +39,7 @@ apps:
     secrets:
       enabled: false
     homepage:
-      enabled: false
+      enabled: true
   - name: homepage
     namespace: homepage
     chart:
