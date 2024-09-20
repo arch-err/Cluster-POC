@@ -98,7 +98,7 @@ repoServer:
     - mountPath: /usr/local/sbin/helm
       subPath: helm
       name: gitops-tools
-    - mountPath: /.age/key.txt
+    - mountPath: /.age
       name: gitops-age-key
   initContainers:
     - name: download-tools
