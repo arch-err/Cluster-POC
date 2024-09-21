@@ -1,109 +1,178 @@
-#
-# IMPORTANT NOTE
-#
-# This chart inherits from bjw-s's common library chart. You can check the default values/options here:
-# https://github.com/bjw-s/helm-charts/tree/main/charts/library/common/values.yaml
-#
+---
+elasticsearchHosts: "https://elasticsearch-master:9200"
+elasticsearchCertificateSecret: elasticsearch-master-certs
+elasticsearchCertificateAuthoritiesFile: ca.crt
+elasticsearchCredentialSecret: elasticsearch-master-credentials
 
-image:
-  # -- image repository
-  repository: ghcr.io/onedr0p/radarr
-  # @default -- chart.appVersion
-  tag:
-  # -- image pull policy
-  pullPolicy: IfNotPresent
+replicas: 1
 
-# -- environment variables.
-# @default -- See below
-env:
-  # -- Set the container timezone
-  TZ: UTC
+# Extra environment variables to append to this nodeGroup
+# This will be appended to the current 'env:' key. You can use any of the kubernetes env
+# syntax here
+extraEnvs:
+  - name: "NODE_OPTIONS"
+    value: "--max-old-space-size=1800"
+#  - name: MY_ENVIRONMENT_VAR
+#    value: the_value_goes_here
 
-# -- Configures service settings for the chart.
-# @default -- See values.yaml
+# Allows you to load environment variables from kubernetes secret or config map
+envFrom: []
+# - secretRef:
+#     name: env-secret
+# - configMapRef:
+#     name: config-map
+
+# A list of secrets and their paths to mount inside the pod
+# This is useful for mounting certificates for security and for mounting
+# the X-Pack license
+secretMounts: []
+#  - name: kibana-keystore
+#    secretName: kibana-keystore
+#    path: /usr/share/kibana/data/kibana.keystore
+#    subPath: kibana.keystore # optional
+
+hostAliases: []
+#- ip: "127.0.0.1"
+#  hostnames:
+#  - "foo.local"
+#  - "bar.local"
+
+image: "docker.elastic.co/kibana/kibana"
+imageTag: "8.5.1"
+imagePullPolicy: "IfNotPresent"
+
+# additionals labels
+labels: {}
+
+annotations: {}
+
+podAnnotations: {}
+# iam.amazonaws.com/role: es-cluster
+
+resources:
+  requests:
+    cpu: "1000m"
+    memory: "2Gi"
+  limits:
+    cpu: "1000m"
+    memory: "2Gi"
+
+protocol: http
+
+serverHost: "0.0.0.0"
+
+healthCheckPath: "/app/kibana"
+
+# Allows you to add any config files in /usr/share/kibana/config/
+# such as kibana.yml
+kibanaConfig: {}
+#   kibana.yml: |
+#     key:
+#       nestedkey: value
+
+# If Pod Security Policy in use it may be required to specify security context as well as service account
+
+podSecurityContext:
+  fsGroup: 1000
+
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  # readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+serviceAccount: ""
+
+# Whether or not to automount the service account token in the pod. Normally, Kibana does not need this
+automountToken: true
+
+# This is the PriorityClass settings as defined in
+# https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+priorityClassName: ""
+
+httpPort: 5601
+
+extraVolumes:
+  []
+  # - name: extras
+  #   emptyDir: {}
+
+extraVolumeMounts:
+  []
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
+  #
+
+extraContainers: []
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
+extraInitContainers: []
+# - name: dummy-init
+#   image: busybox
+#   command: ['echo', 'hey']
+
+updateStrategy:
+  type: "Recreate"
+
 service:
-  main:
-    ports:
-      http:
-        port: 7878
+  type: ClusterIP
+  loadBalancerIP: ""
+  port: 5601
+  nodePort: ""
+  labels: {}
+  annotations: {}
+  # cloud.google.com/load-balancer-type: "Internal"
+  # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+  # service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  # service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
+  # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
+  loadBalancerSourceRanges: []
+  # 0.0.0.0/0
+  httpPortName: http
+
 
 ingress:
-  # -- Enable and configure ingress settings for the chart under this key.
-  # @default -- See values.yaml
-  main:
-    enabled: true
+  enabled: true
+  className: "nginx"
+  pathtype: ImplementationSpecific
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
+  hosts:
+    - host: kibana.jesber.duckdns.org
+      paths:
+        - path: /
+  tls:
+  - hosts:
+    - auth.jesber.duckdns.org
+    secretName: authentik-server-tls # as expected by argocd-server
 
-# -- Configures the probes for the main Pod.
-# @default -- See values.yaml
-probes:
-  liveness:
-    enabled: true
-    ## Set this to true if you wish to specify your own livenessProbe
-    custom: true
-    ## The spec field contains the values for the default livenessProbe.
-    ## If you selected custom: true, this field holds the definition of the livenessProbe.
-    spec:
-      exec:
-        command:
-        - /usr/bin/env
-        - bash
-        - -c
-        - curl --fail localhost:7878/api/v3/system/status?apiKey=`IFS=\> && while
-          read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
-      failureThreshold: 5
-      initialDelaySeconds: 60
-      periodSeconds: 10
-      successThreshold: 1
-      timeoutSeconds: 10
+readinessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  successThreshold: 3
+  timeoutSeconds: 5
 
-# -- Configure persistence settings for the chart under this key.
-## Config persistence is required for the Prometheus exporter sidecar.
-# @default -- See values.yaml
-persistence:
-  config:
-    enabled: false
+imagePullSecrets: []
+nodeSelector: {}
+tolerations: []
+affinity: {}
 
-  media:
-    enabled: false
-    mountPath: /media
+nameOverride: ""
+fullnameOverride: ""
 
-metrics:
-  # -- Enable and configure Exportarr sidecar and Prometheus serviceMonitor.
-  # @default -- See values.yaml
-  enabled: false
-  serviceMonitor:
-    interval: 3m
-    scrapeTimeout: 1m
-    labels: {}
-  # -- Enable and configure Prometheus Rules for the chart under this key.
-  # @default -- See values.yaml
-  prometheusRule:
-    enabled: false
-    labels: {}
-    # -- Configure additionial rules for the chart under this key.
-    # @default -- See prometheusrules.yaml
-    rules: []
-      # - alert: RadarrDown
-      #   annotations:
-      #     description: Radarr service is down.
-      #     summary: Radarr is down.
-      #   expr: |
-      #     radarr_system_status == 0
-      #   for: 5m
-      #   labels:
-      #     severity: critical
-  exporter:
-    image:
-      # -- image repository
-      repository: ghcr.io/onedr0p/exportarr
-      # -- image tag
-      tag: v2.0.1
-      # -- image pull policy
-      pullPolicy: IfNotPresent
-    env:
-      # -- metrics port
-      port: 9794
-      # -- Set to true to enable gathering of additional metrics (slow)
-      additionalMetrics: false
-      # -- Set to true to enable gathering unknown queue items
-      unknownQueueItems: false
+lifecycle: {}
+# preStop:
+#   exec:
+#     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+# postStart:
+#   exec:
+#     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
