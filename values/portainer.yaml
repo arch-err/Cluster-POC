@@ -10,7 +10,7 @@ ingress:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
   hosts:
-    - host: &host "homepage.jesber.duckdns.org"
+    - host: &host "portainer.jesber.duckdns.org"
       paths:
         - path: /
           pathType: Prefix
