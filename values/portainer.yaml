@@ -17,3 +17,4 @@ ingress:
   tls:
     - hosts:
         - *host
+    secretName: portainer-server-tls # as expected by argocd-server
