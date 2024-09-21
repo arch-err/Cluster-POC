@@ -332,18 +332,8 @@ configs:
       {}
       # LDAP_PASSWORD: "mypassword"
 
-    # -- Bcrypt hashed admin password
-    ## Argo expects the password in the secret to be bcrypt hashed. You can create this hash with
-    ## `htpasswd -nbBC 10 "" $ARGO_PWD | tr -d ':\n' | sed 's/$2y/$2a/'`
-    argocdServerAdminPassword: ""
-    # -- Admin password modification time. Eg. `"2006-01-02T15:04:05Z"`
-    # @default -- `""` (defaults to current time)
-    argocdServerAdminPasswordMtime: ""
-
 ## Application controller
 controller:
-
-
   # -- Application controller heartbeat time
   # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/dynamic-cluster-distribution/#working-of-dynamic-distribution
   heartbeatTime: 10
@@ -352,8 +342,6 @@ controller:
   metrics:
     # -- Deploy metrics service
     enabled: true
-    serviceMonitor:
-      enabled: false
     rules:
       # -- Deploy a PrometheusRule for the application controller
       enabled: false
