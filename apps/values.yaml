@@ -71,6 +71,78 @@ apps:
       enabled: false
       homepage:
         enabled: true
+  # - name: harbor
+  #   namespace: harbor
+  #   chart:
+  #     url: https://helm.goharbor.io
+  #     name: harbor
+  #     version: 1.15.1
+  #   secrets:
+  #     enabled: false
+  #   ingress:
+  #     enabled: false
+  #     homepage:
+  #       enabled: false
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  #   ingress:
+  #     enabled: true
+  #     homepage:
+  #       enabled: true
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  #   ingress:
+  #     enabled: true
+  #     homepage:
+  #       enabled: true
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  #   ingress:
+  #     enabled: true
+  #     homepage:
+  #       enabled: true
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  #   ingress:
+  #     enabled: true
+  #     homepage:
+  #       enabled: true
+  # - name: <++>
+  #   namespace: <++>
+  #   chart:
+  #     url: <++>
+  #     name: <++>
+  #     version: <++>
+  #   secrets:
+  #     enabled: false
+  #   ingress:
+  #     enabled: true
+  #     homepage:
+  #       enabled: true
   # - name: <++>
   #   namespace: <++>
   #   chart:
