@@ -204,7 +204,10 @@ downloadDashboards:
   #      key: value_key
 
 ## Pod Annotations
-# podAnnotations: {}
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/path: /metrics
+  prometheus.io/port: "80"
 
 ## ConfigMap Annotations
 # configMapAnnotations: {}
@@ -243,7 +246,7 @@ service:
   appProtocol: ""
 
 serviceMonitor:
-  enabled: true
+  enabled: false
   path: /metrics
   #  namespace: monitoring  (defaults to use the namespace this chart is deployed to)
   labels: {}
