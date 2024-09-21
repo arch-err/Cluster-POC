@@ -23,6 +23,39 @@ extraObjects:
         automated:
           prune: true
           selfHeal: true
+  - apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: argocd-ingress
+      namespace: argocd
+      annotations:
+        # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+        cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "ArgoCD"
+        gethomepage.dev/description: ""
+        gethomepage.dev/group: "Cluster Management"
+        gethomepage.dev/icon: "argocd.png"
+    spec:
+      ingressClassName: nginx
+      rules:
+      - host: argocd.jesber.duckdns.org
+        http:
+          paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  name: http
+      tls:
+      - hosts:
+        - argocd.jesber.duckdns.org
+        secretName: argocd-server-tls # as expected by argocd-server
+
 
 repoServer:
   env:
@@ -549,19 +582,6 @@ server:
   metrics:
     # -- Deploy metrics service
     enabled: true
-
-
-  # Argo CD server ingress configuration
-  ingress:
-    enabled: true
-    controller: generic
-    annotations:
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-      # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-      cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
-
-    ingressClassName: "nginx"
-    tls: true
 
 ## Repo Server
 repoServer:
