@@ -16,5 +16,5 @@ ingress:
           pathType: Prefix
   tls:
     - hosts:
-        - *host
-    secretName: portainer-server-tls # as expected by argocd-server
+      - *host
+      secretName: portainer-server-tls
