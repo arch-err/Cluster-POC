@@ -60,7 +60,7 @@ apps:
     secrets:
       enabled: false
     homepage:
-      enabled: false
+      enabled: true
   # - name: <++>
   #   namespace: <++>
   #   chart:

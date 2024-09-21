@@ -2,7 +2,7 @@ persistence:
   enabled: true
   size: "10Gi"
 
-ingress:
-  enabled: true
-  hosts:
-    - host: portainer.jesber.duckdns.org
+# ingress:
+#   enabled: true
+#   hosts:
+#     - host: portainer.jesber.duckdns.org
