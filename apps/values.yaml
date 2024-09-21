@@ -85,18 +85,18 @@ apps:
   #     enabled: false
   #     homepage:
   #       enabled: false
-  - name: kibana
-    namespace: demo
-    chart:
-      url: https://helm.elastic.co
-      name: kibana
-      version: 8.5.1
-    secrets:
-      enabled: false
-    ingress:
-      enabled: false
-      homepage:
-        enabled: true
+  # - name: kibana
+  #   namespace: demo
+  #   chart:
+  #     url: https://helm.elastic.co
+  #     name: kibana
+  #     version: 8.5.1
+  #   secrets:
+  #     enabled: false
+  #   ingress:
+  #     enabled: false
+  #     homepage:
+  #       enabled: true
   # - name: <++>
   #   namespace: <++>
   #   chart:
