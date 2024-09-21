@@ -6,8 +6,8 @@ ingress:
   enabled: true
   ingressClassName: "nginx"
   annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
   hosts:
     - host: &host "portainer.jesber.duckdns.org"
