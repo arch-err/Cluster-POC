@@ -135,14 +135,6 @@ repoServer:
           name: gitops-tools
 
 
-
-
-
-
-
-
-
-
 ## Globally shared configuration
 global:
   domain: argocd.jesber.duckdns.org
@@ -156,8 +148,6 @@ global:
 
 ## Argo Configs
 configs:
-  params:
-    server.insecure: true
 
   ssh:
     knownHosts: |
@@ -222,6 +212,7 @@ configs:
     #     - email
 
   params:
+    server.insecure: true
     create: true
 
     ## Generic parameters
