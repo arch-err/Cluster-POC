@@ -58,6 +58,8 @@ extraObjects:
 
 
 repoServer:
+  metrics:
+    enabled: true
   env:
     - name: HELM_PLUGINS
       value: /gitops-tools/helm-plugins/
@@ -560,11 +562,6 @@ server:
   ## Server metrics service configuration
   metrics:
     # -- Deploy metrics service
-    enabled: true
-
-## Repo Server
-repoServer:
-  metrics:
     enabled: true
 
 applicationSet:
