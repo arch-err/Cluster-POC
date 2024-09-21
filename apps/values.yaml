@@ -15,11 +15,13 @@ apps:
       url: https://grafana.github.io/helm-charts
       name: grafana
       version: 8.5.1
-    homepage:
-      enabled: true
-      description: "Platform for data analytics and monitoring"
     secrets:
       enabled: true
+    ingress:
+      enabled: true
+      homepage:
+        enabled: true
+        description: "Platform for data analytics and monitoring"
   - name: influxdb
     namespace: monitoring
     chart:
@@ -28,8 +30,10 @@ apps:
       version: 2.1.2
     secrets:
       enabled: true
-    homepage:
+    ingress:
       enabled: true
+      homepage:
+        enabled: true
   - name: prometheus
     namespace: monitoring
     chart:
@@ -38,9 +42,11 @@ apps:
       version: 25.27.0
     secrets:
       enabled: false
-    homepage:
-      enabled: true
+    ingress:
       valuesSection: server
+      enabled: true
+      homepage:
+        enabled: true
   - name: homepage
     namespace: homepage
     chart:
@@ -49,8 +55,10 @@ apps:
       version: 2.0.1
     secrets:
       enabled: false
-    homepage:
+    ingress:
       enabled: false
+      homepage:
+        enabled: false
   - name: portainer
     namespace: portainer
     chart:
@@ -59,8 +67,10 @@ apps:
       version: 1.0.53
     secrets:
       enabled: false
-    homepage:
-      enabled: true
+    ingress:
+      enabled: false
+      homepage:
+        enabled: true
   # - name: <++>
   #   namespace: <++>
   #   chart:
@@ -69,55 +79,7 @@ apps:
   #     version: <++>
   #   secrets:
   #     enabled: false
-  #   homepage:
+  #   ingress:
   #     enabled: true
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
-  #   homepage:
-  #     enabled: true
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
-  #   homepage:
-  #     enabled: true
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
-  #   homepage:
-  #     enabled: true
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
-  #   homepage:
-  #     enabled: true
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
-  #   homepage:
-  #     enabled: true
+  #     homepage:
+  #       enabled: true
