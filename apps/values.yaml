@@ -85,16 +85,16 @@ apps:
   #     enabled: false
   #     homepage:
   #       enabled: false
-  - name: radarr
+  - name: kibana
     namespace: demo
     chart:
-      url: https://charts.pree.dev
-      name: radarr
-      version: 1.11.1
+      url: https://helm.elastic.co
+      name: kibana
+      version: 8.5.1
     secrets:
       enabled: false
     ingress:
-      enabled: false
+      enabled: true
       homepage:
         enabled: true
   # - name: <++>
