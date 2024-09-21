@@ -59,7 +59,7 @@ spec:
               gethomepage.dev/enabled: "true"
               gethomepage.dev/name: {{ default (.name | title) .ingress.homepage.name | quote}}
               gethomepage.dev/description: {{ default "" .ingress.homepage.description | quote }}
-              gethomepage.dev/group: {{ default (.namespace | title) .ingress.group | quote }}
+              gethomepage.dev/group: {{ default (.namespace | title) .ingress.homepage.group | quote }}
               gethomepage.dev/icon: {{ default (print .name ".png" ) .ingress.homepage.icon }}
           {{- end }}
           {{- if .ingress.enabled }}
