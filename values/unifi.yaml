@@ -240,7 +240,7 @@ ingress:
         - unifi.jesber.duckdns.org
 
 # -- Timezone for UniFi controller
-timezone: UTC
+timezone: UTC+2
 # -- Allow listening on privileged ports. Required when `controllerService.port` or `guiService.port` is less than 1024.
 bindPrivilegedPorts: true
 # -- This is used to determine whether or not the UniFi service runs as a privileged (root) user. The default value is `true` but it is recommended to use `false` instead.
@@ -253,57 +253,23 @@ GID: 999
 # If you provide your own custom certificate in <unifi-data>/cert
 # you can define the following parameters to configure the controller
 customCert:
-  # -- Enable use of your own custom certificate in <unifi-data>/cert
-  enabled: false
-  # -- Sets the CERT_IS_CHAIN environment variable.
-  # See [Certificate Support](https://github.com/jacobalberty/unifi-docker?tab=readme-ov-file#certificate-support)
+  enabled: true
   isChain: false
-  # -- File name of the certificate
   certName: tls.crt
-  # -- File name of the private key for the certificate
   keyName: tls.key
-  # -- Load custom certificate from an existing Kubernetes secret.
-  # If you want to store certificate and its key as a Kubernetes tls secret
-  # you can pass the name of that secret using certSecret variable
-  certSecret: "" # E.g. "unifi-tls"
+  certSecret: "unifi-server-tls"
 
 ## Logging configuration
 logging:
   promtail:
     # -- Enable promtail sidecar
     enabled: false
-    image:
-      # -- Promtail container image name
-      repository: grafana/promtail
-      # -- Promtail container image tag
-      tag: 2.9.8
-      # -- Promtail image pull policy. One of `Always`, `Never`, `IfNotPresent`
-      pullPolicy: IfNotPresent
     loki:
       # -- Loki backend for promtail sidecar
       url: http://loki.logs.svc.cluster.local:3100/loki/api/v1/push
 
-## define an external mongoDB instead of using the built-in mongodb
-mongodb:
-  # -- Use external mongoDB instead of using the built-in mongodb
-  enabled: false
-  # -- Maps to `db.mongo.uri`
-  dbUri: mongodb://mongo/unifi
-  # -- Maps to `statdb.mongo.uri`
-  statDbUri: mongodb://mongo/unifi_stat
-  # -- Maps to `unifi.db.name`
-  databaseName: unifi
-
 persistence:
-  # -- Use persistent volume to store data
-  enabled: false
-  # -- Storage Class to use for the PVC
-  storageClass: ""
-  # -- Use an existing PVC to persist data
-  existingClaim: ""
-  # -- Persistence access modes
-  accessMode: ReadWriteOnce
-  # -- Size of persistent volume claim
+  enabled: true
   size: 5Gi
   # -- Do not delete the PVC upon helm uninstall by adding
   # the `helm.sh/resource-policy: keep` annotation.
@@ -368,73 +334,3 @@ extraConfigFiles: {}
   #   </Configuration>
 
 # -- Set container requests and limits for different resources like CPU or memory
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
-
-# Liveness probe values
-# Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
-livenessProbe:
-  # -- Enable liveness [probe]
-  enabled: true
-  # -- Number of seconds after the container has started before probes are initiated.
-  initialDelaySeconds: 0
-  # -- How often (in seconds) to perform the [probe].
-  periodSeconds: 10
-  # -- Number of seconds after which the [probe] times out.
-  timeoutSeconds: 1
-  # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded.
-  failureThreshold: 3
-  # -- Minimum consecutive successes for the [probe] to be considered successful after having failed.
-  successThreshold: 1
-
-# Readiness probe values
-# Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
-readinessProbe:
-  # -- Enable readiness [probe]
-  enabled: true
-  # -- Number of seconds after the container has started before probes are initiated.
-  initialDelaySeconds: 0
-  # -- How often (in seconds) to perform the [probe].
-  periodSeconds: 10
-  # -- Number of seconds after which the [probe] times out.
-  timeoutSeconds: 1
-  # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded.
-  failureThreshold: 3
-  # -- Minimum consecutive successes for the [probe] to be considered successful after having failed.
-  successThreshold: 1
-
-# Startup probe values
-# Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
-startupProbe:
-  # -- Enable startup [probe]. **Set** `livenessProbe.initialDelaySeconds` **to at least `30` if you decide to disable the startupProbe!** Max startup delay is `failureThreshold * periodSeconds`.
-  enabled: true
-  # -- How often (in seconds) to perform the [probe].
-  periodSeconds: 5
-  # -- Number of seconds after which the [probe] times out.
-  timeoutSeconds: 1
-  # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded.
-  failureThreshold: 60
-
-# -- [Node selector] for pod assignment
-nodeSelector: {}
-
-# -- [Tolerations] for pod assignment
-tolerations: []
-
-# -- Assign custom [affinity] rules to the deployment
-affinity: {}
-
-# -- Annotations for UniFi pod
-podAnnotations: {}
-
-# -- Annotations for UniFi deployment
-deploymentAnnotations: {}

@@ -100,7 +100,7 @@ apps:
   - name: unifi
     namespace: unifi
     chart:
-      url: ghcr.io/mkilchhofer/unifi-chart
+      url: ghcr.io/mkilchhofer/unifi-char
       name: unifi
       version: 1.10.8
     secrets:
