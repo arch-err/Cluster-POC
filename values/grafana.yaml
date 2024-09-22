@@ -1,3 +1,19 @@
+ingress:
+  enabled: true
+  ingressClassName: nginx
+
+  pathType: Prefix
+  path: /
+
+  hosts:
+    - grafana.jesber.duckdns.org
+
+
+  tls:
+    - secretName: grafana-server-tls
+      hosts:
+        - grafana.jesber.duckdns.org
+
 global:
   # -- Overrides the Docker registry globally for all images
   imageRegistry: null
