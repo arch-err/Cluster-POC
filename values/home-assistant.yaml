@@ -119,7 +119,7 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls: []
+  tls:
     - secretName: homeassistant-server-tls
       hosts:
         - homeassistant.jesber.duckdns.org
