@@ -97,18 +97,18 @@ apps:
   #     enabled: false
   #     homepage:
   #       enabled: true
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
-  #   ingress:
-  #     enabled: true
-  #     homepage:
-  #       enabled: true
+  - name: home-assistant
+    namespace: home-automation
+    chart:
+      url: http://pajikos.github.io/home-assistant-helm-chart
+      name: home-assistant
+      version: 0.2.78
+    secrets:
+      enabled: false
+    ingress:
+      enabled: true
+      homepage:
+        enabled: true
   # - name: <++>
   #   namespace: <++>
   #   chart:
