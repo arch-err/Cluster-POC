@@ -73,30 +73,6 @@ apps:
       homepage:
         enabled: true
         group: "Cluster Management"
-  # - name: harbor
-  #   namespace: harbor
-  #   chart:
-  #     url: https://helm.goharbor.io
-  #     name: harbor
-  #     version: 1.15.1
-  #   secrets:
-  #     enabled: false
-  #   ingress:
-  #     enabled: false
-  #     homepage:
-  #       enabled: false
-  # - name: kibana
-  #   namespace: logging
-  #   chart:
-  #     url: https://helm.elastic.co
-  #     name: kibana
-  #     version: 8.5.1
-  #   secrets:
-  #     enabled: false
-  #   ingress:
-  #     enabled: false
-  #     homepage:
-  #       enabled: true
   - name: home-assistant
     namespace: home-automation
     chart:
