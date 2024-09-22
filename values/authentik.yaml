@@ -17,3 +17,23 @@ postgresql:
         password: "ThisIsNotASecurePassword"
 redis:
     enabled: true
+
+ingress:
+  enabled: true
+
+  ingressClassName: nginx
+  rules:
+  - host: auth.jesber.duckdns.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: authentik-server
+            port:
+              name: http
+  tls:
+  - hosts:
+    - auth.jesber.duckdns.org
+    secretName: authentik-server-tls # as expected by argocd-server
