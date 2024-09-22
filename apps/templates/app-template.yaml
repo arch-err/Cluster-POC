@@ -77,7 +77,7 @@ spec:
             enabled: true
             ingressClassName: nginx
             hosts:
-              - {{ .name }}.jesber.duckdns.org
+              - host: {{ .name }}.jesber.duckdns.org
             tls:
               - hosts:
                 - {{ .name }}.jesber.duckdns.org
