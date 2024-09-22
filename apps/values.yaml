@@ -120,6 +120,7 @@ apps:
       enabled: false
     ingress:
       enabled: true
+      valuesSection: server
       homepage:
         enabled: true
   # - name: <++>
