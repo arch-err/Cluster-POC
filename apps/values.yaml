@@ -97,18 +97,18 @@ apps:
       enabled: true
       homepage:
         enabled: true
-  # - name: <++>
-  #   namespace: <++>
-  #   chart:
-  #     url: <++>
-  #     name: <++>
-  #     version: <++>
-  #   secrets:
-  #     enabled: false
-  #   ingress:
-  #     enabled: true
-  #     homepage:
-  #       enabled: true
+  - name: unifi
+    namespace: unifi
+    chart:
+      url: ghcr.io/mkilchhofer/unifi-chart/
+      name: unifi
+      version: 1.10.8
+    secrets:
+      enabled: false
+    ingress:
+      enabled: true
+      homepage:
+        enabled: true
   # - name: <++>
   #   namespace: <++>
   #   chart:
