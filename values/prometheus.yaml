@@ -355,25 +355,24 @@ server:
   ## Override the prometheus.server.fullname for all objects related to the Prometheus server
   fullnameOverride: ""
 
-#  ingress:
-#    enabled: true
-#    ingressClassName: nginx
-#
-#    annotations:
-#      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-#      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-#      cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
-#
-#    extraLabels: {}
-#
-#    hosts:
-#      - prometheus.jesber.duckdns.org
-#
-#
-#    tls:
-#      - hosts:
-#          - prometheus.jesber.duckdns.org
-#        secretName: prometheus-server-tls
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
+
+
+    hosts:
+      - prometheus.jesber.duckdns.org
+
+
+    tls:
+      - hosts:
+          - prometheus.jesber.duckdns.org
+        secretName: prometheus-server-tls
 
   ## Server Deployment Strategy type
   strategy:
