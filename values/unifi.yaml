@@ -135,6 +135,13 @@ controllerService:
   ingress:
     enabled: true
     ingressClassName: "nginx"
+
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+
     path: /
     hosts:
       - unifi-controller.jesber.duckdns.org
@@ -231,6 +238,13 @@ speedtestService:
 ingress:
   enabled: true
   ingressClassName: "nginx"
+
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+
   path: /
   hosts:
     - unifi.jesber.duckdns.org
