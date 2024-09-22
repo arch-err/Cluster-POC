@@ -53,6 +53,7 @@ spec:
               tls:
                 - hosts:
                   - {{ .name }}.jesber.duckdns.org
+                  secretName: {{ .name }}-server-tls
             {{- end }}
         {{- else }}
           {{- if (or .ingress.homepage.enabled .ingress.enabled) }}
@@ -81,6 +82,7 @@ spec:
             tls:
               - hosts:
                 - {{ .name }}.jesber.duckdns.org
+              secretName: {{ .name }}-server-tls
           {{- end }}
         {{- end }}
 
