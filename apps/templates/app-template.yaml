@@ -44,16 +44,6 @@ spec:
                 nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
                 nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
                 cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
-
-              enabled: true
-              ingressClassName: nginx
-
-              hosts:
-                - host: {{ .name }}.jesber.duckdns.org
-              tls:
-                - hosts:
-                  - {{ .name }}.jesber.duckdns.org
-                  secretName: {{ .name }}-server-tls
             {{- end }}
         {{- else }}
           {{- if (or .ingress.homepage.enabled .ingress.enabled) }}
@@ -74,19 +64,6 @@ spec:
               nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
               nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
               cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
-
-            enabled: true
-            ingressClassName: nginx
-            hosts:
-              - host: {{ .name }}.jesber.duckdns.org
-                http:
-                  paths:
-                  - path: /
-                    pathType: Prefix
-            tls:
-              - hosts:
-                - {{ .name }}.jesber.duckdns.org
-              secretName: {{ .name }}-server-tls
           {{- end }}
         {{- end }}
 
