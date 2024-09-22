@@ -79,6 +79,10 @@ spec:
             ingressClassName: nginx
             hosts:
               - host: {{ .name }}.jesber.duckdns.org
+                http:
+                  paths:
+                  - path: /
+                    pathType: Prefix
             tls:
               - hosts:
                 - {{ .name }}.jesber.duckdns.org
