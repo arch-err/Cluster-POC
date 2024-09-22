@@ -29,8 +29,6 @@ extraObjects:
       name: argocd-ingress
       namespace: argocd
       annotations:
-        # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-        # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
         nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
         cert-manager.io/cluster-issuer: "selfsign-clusterissuer"
         gethomepage.dev/enabled: "true"
@@ -140,12 +138,6 @@ repoServer:
 ## Globally shared configuration
 global:
   domain: argocd.jesber.duckdns.org
-
-  # -- Common labels for the all resources
-  additionalLabels: {}
-    # app: argo-cd
-
-  # -- Add Prometheus scrape annotations to all metrics services. This can be used as an alternative to the ServiceMonitors.
   addPrometheusAnnotations: true
 
 ## Argo Configs
@@ -216,19 +208,12 @@ configs:
   params:
     server.insecure: true
     create: true
-
-    ## Generic parameters
     # -- Open-Telemetry collector address: (e.g. "otel-collector:4317")
     otlp.address: ''
 
-    ## Controller Properties
-    # -- Number of application status processors
     controller.status.processors: 20
-    # -- Number of application operation processors
     controller.operation.processors: 10
-    # -- Specifies timeout between application self heal attempts
     controller.self.heal.timeout.seconds: 5
-    # -- Repo server RPC call timeout seconds.
     controller.repo.server.timeout.seconds: 60
 
     server.staticassets: /shared/app
@@ -239,8 +224,6 @@ configs:
 
   rbac:
     create: true
-
-    # -- Annotations to be added to argocd-rbac-cm configmap
     annotations: {}
 
     # -- The name of the default role which Argo CD will falls back to, when authorizing API requests (optional).
@@ -316,11 +299,8 @@ configs:
   # Argo CD sensitive data
   # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
   secret:
-    # -- Create the argocd-secret
     createSecret: true
-    # -- Labels to be added to argocd-secret
     labels: {}
-    # -- Annotations to be added to argocd-secret
     annotations: {}
 
     # -- Shared secret for authenticating GitHub webhook events
@@ -334,21 +314,18 @@ configs:
       {}
       # LDAP_PASSWORD: "mypassword"
 
-## Application controller
 controller:
   # -- Application controller heartbeat time
   # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/dynamic-cluster-distribution/#working-of-dynamic-distribution
   heartbeatTime: 10
 
-  ## Application controller metrics configuration
   metrics:
-    # -- Deploy metrics service
     enabled: true
     rules:
       # -- Deploy a PrometheusRule for the application controller
       enabled: false
       # -- PrometheusRule namespace
-      namespace: "" # "monitoring"
+      namespace: "monitoring"
       # -- PrometheusRule selector
       selector: {}
         # prometheus: kube-prometheus
@@ -385,170 +362,87 @@ controller:
       #       12 hours which means that the state of this cloud has drifted away from the
       #       state inside Git.
 
-## Dex
 dex:
-  # -- Enable dex
   enabled: false
-  # -- Dex name
   name: dex-server
 
-  # -- Additional command line arguments to pass to the Dex server
   extraArgs: []
 
   metrics:
-    # -- Deploy metrics service
     enabled: true
-    serviceMonitor:
-      enabled: false
 
-  ## Probes for Dex server
-  ## Supported from Dex >= 2.28.0
   livenessProbe:
-    # -- Enable Kubernetes liveness probe for Dex >= 2.28.0
     enabled: true
-    # -- Http path to use for the liveness probe
     httpPath: /healthz/live
-    # -- Http port to use for the liveness probe
     httpPort: metrics
-    # -- Scheme to use for for the liveness probe (can be HTTP or HTTPS)
     httpScheme: HTTP
-    # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
     failureThreshold: 3
-    # -- Number of seconds after the container has started before [probe] is initiated
     initialDelaySeconds: 10
-    # -- How often (in seconds) to perform the [probe]
     periodSeconds: 10
-    # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
     successThreshold: 1
-    # -- Number of seconds after which the [probe] times out
     timeoutSeconds: 1
 
   readinessProbe:
-    # -- Enable Kubernetes readiness probe for Dex >= 2.28.0
     enabled: true
-    # -- Http path to use for the readiness probe
     httpPath: /healthz/ready
-    # -- Http port to use for the readiness probe
     httpPort: metrics
-    # -- Scheme to use for for the liveness probe (can be HTTP or HTTPS)
     httpScheme: HTTP
-    # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
     failureThreshold: 3
-    # -- Number of seconds after the container has started before [probe] is initiated
     initialDelaySeconds: 10
-    # -- How often (in seconds) to perform the [probe]
     periodSeconds: 10
-    # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
     successThreshold: 1
-    # -- Number of seconds after which the [probe] times out
     timeoutSeconds: 1
 
-## Redis
 redis:
-  ## Prometheus redis-exporter sidecar
   exporter:
-    # -- Enable Prometheus redis-exporter sidecar
     enabled: true
-    # -- Environment variables to pass to the Redis exporter
     env: []
 
-    ## Probes for Redis exporter (optional)
-    ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
     readinessProbe:
-      # -- Enable Kubernetes liveness probe for Redis exporter (optional)
       enabled: true
-      # -- Number of seconds after the container has started before [probe] is initiated
       initialDelaySeconds: 30
-      # -- How often (in seconds) to perform the [probe]
       periodSeconds: 15
-      # -- Number of seconds after which the [probe] times out
       timeoutSeconds: 15
-      # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
       successThreshold: 1
-      # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
       failureThreshold: 5
     livenessProbe:
-      # -- Enable Kubernetes liveness probe for Redis exporter
       enabled: true
-      # -- Number of seconds after the container has started before [probe] is initiated
       initialDelaySeconds: 30
-      # -- How often (in seconds) to perform the [probe]
       periodSeconds: 15
-      # -- Number of seconds after which the [probe] times out
       timeoutSeconds: 15
-      # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
       successThreshold: 1
-      # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
       failureThreshold: 5
 
-
-  ## Probes for Redis server (optional)
-  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
   readinessProbe:
-    # -- Enable Kubernetes liveness probe for Redis server
     enabled: true
-    # -- Number of seconds after the container has started before [probe] is initiated
     initialDelaySeconds: 30
-    # -- How often (in seconds) to perform the [probe]
     periodSeconds: 15
-    # -- Number of seconds after which the [probe] times out
     timeoutSeconds: 15
-    # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
     successThreshold: 1
-    # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
     failureThreshold: 5
   livenessProbe:
-    # -- Enable Kubernetes liveness probe for Redis server
     enabled: true
-    # -- Number of seconds after the container has started before [probe] is initiated
     initialDelaySeconds: 30
-    # -- How often (in seconds) to perform the [probe]
     periodSeconds: 15
-    # -- Number of seconds after which the [probe] times out
     timeoutSeconds: 15
-    # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
     successThreshold: 1
-    # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
     failureThreshold: 5
 
   metrics:
     enabled: true
 
-    serviceMonitor:
-      enabled: false
-
 redisSecretInit:
-  # -- Enable Redis secret initialization. If disabled, secret must be provisioned by alternative methods
   enabled: true
-  # -- Redis secret-init name
   name: redis-secret-init
 
-
-## Server
 server:
-  # -- Argo CD server name
   name: server
 
-
-  ## Argo CD extensions
-  ## This function in tech preview stage, do expect instability or breaking changes in newer versions.
   ## Ref: https://github.com/argoproj-labs/argocd-extension-installer
   ## When you enable extensions, you need to configure RBAC of logged in Argo CD user.
   ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/#the-extensions-resource
   extensions:
-    # -- Enable support for Argo CD extensions
-    enabled: false
-
-    ## Argo CD extension installer image
-    image:
-      # -- Repository to use for extension installer image
-      repository: "quay.io/argoprojlabs/argocd-extension-installer"
-      # -- Tag to use for extension installer image
-      tag: "v0.0.5"
-      # -- Image pull policy for extensions
-      # @default -- `""` (defaults to global.image.imagePullPolicy)
-      imagePullPolicy: ""
-
+    enabled: true
     ## Ref: https://github.com/argoproj-labs/argocd-extension-metrics#install-ui-extension
     extensionList:
       - name: extension-metrics
@@ -559,9 +453,7 @@ server:
             value: https://github.com/argoproj-labs/argocd-extension-metrics/releases/download/v1.0.3/extension_checksums.txt
 
 
-  ## Server metrics service configuration
   metrics:
-    # -- Deploy metrics service
     enabled: true
 
 applicationSet:
@@ -570,42 +462,27 @@ applicationSet:
 
   readinessProbe:
     enabled: true
-    # -- Number of seconds after the container has started before [probe] is initiated
     initialDelaySeconds: 10
-    # -- How often (in seconds) to perform the [probe]
     periodSeconds: 10
-    # -- Number of seconds after which the [probe] times out
     timeoutSeconds: 1
-    # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
     successThreshold: 1
-    # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
     failureThreshold: 3
 
   livenessProbe:
-    # -- Enable Kubernetes liveness probe for ApplicationSet controller
     enabled: true
-    # -- Number of seconds after the container has started before [probe] is initiated
     initialDelaySeconds: 10
-    # -- How often (in seconds) to perform the [probe]
     periodSeconds: 10
-    # -- Number of seconds after which the [probe] times out
     timeoutSeconds: 1
-    # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
     successThreshold: 1
-    # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
     failureThreshold: 3
 
 
 notifications:
-
   secret:
     # -- Whether helm chart creates notifications controller secret
     ## If true, will create a secret with the name below. Otherwise, will assume existence of a secret with that name.
     create: true
-
-    # -- notifications controller Secret name
     name: "argocd-notifications-secret"
-
     # -- key:value pairs of annotations to be added to the secret
     annotations: {}
 
@@ -638,31 +515,18 @@ notifications:
     # service.slack: |
     #   token: $slack-token
 
-
-
   readinessProbe:
     enabled: true
-    # -- Number of seconds after the container has started before [probe] is initiated
     initialDelaySeconds: 10
-    # -- How often (in seconds) to perform the [probe]
     periodSeconds: 10
-    # -- Number of seconds after which the [probe] times out
     timeoutSeconds: 1
-    # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
     successThreshold: 1
-    # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
     failureThreshold: 3
 
   livenessProbe:
-    # -- Enable Kubernetes liveness probe for notifications controller Pods
     enabled: true
-    # -- Number of seconds after the container has started before [probe] is initiated
     initialDelaySeconds: 10
-    # -- How often (in seconds) to perform the [probe]
     periodSeconds: 10
-    # -- Number of seconds after which the [probe] times out
     timeoutSeconds: 1
-    # -- Minimum consecutive successes for the [probe] to be considered successful after having failed
     successThreshold: 1
-    # -- Minimum consecutive failures for the [probe] to be considered failed after having succeeded
     failureThreshold: 3
