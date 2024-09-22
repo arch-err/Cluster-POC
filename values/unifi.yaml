@@ -107,7 +107,7 @@ captivePortalService:
     hosts:
       - unifi-captive.jesber.duckdns.org
     tls:
-      - secretName: unifi-captive-server-tls
+      - secretName: unifi-server-tls
         hosts:
           - unifi-captive.jesber.duckdns.org
 
@@ -139,7 +139,7 @@ controllerService:
     hosts:
       - unifi-controller.jesber.duckdns.org
     tls:
-      - secretName: unifi-controller-server-tls
+      - secretName: unifi-server-tls
         hosts:
           - unifi-controller.jesber.duckdns.org
 
