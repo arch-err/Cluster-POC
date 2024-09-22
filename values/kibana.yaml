@@ -151,8 +151,8 @@ ingress:
         - path: /
   tls:
   - hosts:
-    - auth.jesber.duckdns.org
-    secretName: authentik-server-tls # as expected by argocd-server
+    - kibana.jesber.duckdns.org
+    secretName: kibana-server-tls # as expected by argocd-server
 
 readinessProbe:
   failureThreshold: 3
