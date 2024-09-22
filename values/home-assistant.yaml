@@ -110,7 +110,19 @@ service:
   # Annotations to add to the service
   annotations: {}
 
-# Ingress settings
+ingress:
+  enabled: true
+  className: "nginx"
+
+  hosts:
+    - host: homeassistant.jesber.duckdns.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+    - secretName: homeassistant-server-tls
+      hosts:
+        - homeassistant.jesber.duckdns.org
 
 # Resource settings for the container
 resources:
@@ -350,22 +362,21 @@ addons:
       # Service port
       port: 12321
     # Ingress settings for the code-server addon
-
-
     ingress:
-      enabled: true
-      className: "nginx"
-
+      # Enable or disable the ingress for the code-server addon
+      enabled: false
+      # Ingress class name
+      className: ""
+      # Ingress annotations
+      annotations: {}
+      # Ingress hosts configuration
       hosts:
-        - host: homeassistant.jesber.duckdns.org
+        - host: chart-example.local
           paths:
             - path: /
               pathType: ImplementationSpecific
-      tls:
-        - hosts:
-            - homeassistant.jesber.duckdns.org
-          secretName: homeassistant-server-tls
-
+      # Ingress TLS configuration
+      tls: []
     # if you need any additional volume mounts, you can define them here
     additionalMounts: []
       # - mountPath: /home/coder/.ssh/id_rsa
